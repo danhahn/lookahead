@@ -27,8 +27,8 @@ const Navigation: React.FC<Props> = ({ active }) => {
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M0 2.04816e-07L16 0V16H0V2.04816e-07ZM14.3636 1.63636V14.3636H1.63636V1.63636H14.3636Z"
           />
         </svg>

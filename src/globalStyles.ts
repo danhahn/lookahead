@@ -10,18 +10,20 @@ const GlobalStyle = createGlobalStyle`
     --color5: #151515;
   }
 
-  :root {
+  /* :root {
     --color1: #151515;
     --color2: #515151;
     --color3: #D1D1D1;
     --color4: #EEEEEE;
     --color5: #FFFFFF;
-  }
+  } */
+
+  
   body {
     margin: 0;
     font-family: 'Inter', sans-serif;
-    background-color: var(--color1);
-    color: var(--color5);
+    background-color: var(--color5);
+    color: var(--color1);
   }
 
   p {

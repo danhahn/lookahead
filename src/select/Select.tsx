@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useCombobox } from 'downshift';
+import { Label, Wrapper, Input, Item, Ul } from './styles';
 
 type Items = string[];
 
@@ -11,12 +12,10 @@ const Select: React.FC<Props> = ({ items }) => {
   const [inputItems, setInputItems] = useState(items);
   const {
     isOpen,
-    getToggleButtonProps,
     getLabelProps,
     getMenuProps,
     getInputProps,
     getComboboxProps,
-    highlightedIndex,
     getItemProps,
   } = useCombobox({
     items: inputItems,
@@ -24,27 +23,42 @@ const Select: React.FC<Props> = ({ items }) => {
       setInputItems(items.filter(item => item.toLowerCase()));
     },
   });
+
+  async function lookUpUsers(event: React.ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value;
+    if (value.length < 4) return;
+
+    console.log(value);
+    // const rawData = await fetch(`https://api.github.com/search/users?q=${user}`);
+    // const users = await rawData.json();
+    // console.log(users);
+  }
+
   return (
     <div>
-      <label {...getLabelProps()}>Choose an element:</label>
-      <div {...getComboboxProps()}>
-        <input {...getInputProps()} />
-        <button type="button" {...getToggleButtonProps()} aria-label="toggle menu">
-          &#8595;
-        </button>
-      </div>
-      <ul {...getMenuProps()}>
+      <Wrapper className={inputItems ? 'active' : ''}>
+        <Label {...getLabelProps()}>Type something</Label>
+        <div {...getComboboxProps()}>
+          <Input {...getInputProps()} onInput={lookUpUsers} />
+        </div>
+      </Wrapper>
+      <Ul {...getMenuProps()}>
         {isOpen &&
           inputItems.map((item, index) => (
-            <li
-              style={highlightedIndex === index ? { backgroundColor: '#bde4ff' } : {}}
-              key={`${item}${index}`}
-              {...getItemProps({ item, index })}
-            >
-              {item}
-            </li>
+            <Item key={`${item}${index}`} {...getItemProps({ item, index })}>
+              <span>{item}</span>
+              <svg
+                width="15"
+                height="16"
+                viewBox="0 0 15 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M7.35413 1.68681C7.54939 1.49154 7.54939 1.17496 7.35413 0.979699C7.15887 0.784436 6.84228 0.784436 6.64702 0.979699L0.333909 7.29281C-0.0566163 7.68334 -0.0566147 8.3165 0.333909 8.70703L6.64702 15.0201C6.84228 15.2154 7.15887 15.2154 7.35413 15.0201C7.54939 14.8249 7.54939 14.5083 7.35413 14.313L1.5411 8.5H14.334C14.6101 8.5 14.834 8.27614 14.834 8C14.834 7.72386 14.6101 7.5 14.334 7.5H1.54093L7.35413 1.68681Z" />
+              </svg>
+            </Item>
           ))}
-      </ul>
+      </Ul>
     </div>
   );
 };

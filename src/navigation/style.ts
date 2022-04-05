@@ -8,6 +8,6 @@ export const StyledNavigation = styled.div`
   display: grid;
   place-items: center;
   svg {
-    fill: var(--color5);
+    fill: var(--color1);
   }
 `;
