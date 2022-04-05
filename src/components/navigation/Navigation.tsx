@@ -3,11 +3,12 @@ import { StyledNavigation } from './style';
 
 type Props = {
   active: boolean;
+  onClick: () => void;
 };
 
-const Navigation: React.FC<Props> = ({ active }) => {
+const Navigation: React.FC<Props> = ({ active, onClick }) => {
   return (
-    <StyledNavigation>
+    <StyledNavigation onClick={onClick}>
       {active ? (
         <svg
           width="15"

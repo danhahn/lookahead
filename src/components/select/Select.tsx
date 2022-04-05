@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { useCombobox } from 'downshift';
 import { Label, Wrapper, Input, Item, Ul } from './styles';
 
-type Items = string[];
+export type SelectItems = string[];
 
 type Props = {
-  items: Items;
+  items: SelectItems;
+  lookUpUsers: (e: any) => void;
+  setUser?: (u: string) => void;
 };
 
-const Select: React.FC<Props> = ({ items }) => {
+const Select: React.FC<Props> = ({ items, lookUpUsers, setUser }) => {
   const [inputItems, setInputItems] = useState(items);
   const {
     isOpen,
@@ -24,16 +26,6 @@ const Select: React.FC<Props> = ({ items }) => {
     },
   });
 
-  async function lookUpUsers(event: React.ChangeEvent<HTMLInputElement>) {
-    const value = event.target.value;
-    if (value.length < 4) return;
-
-    console.log(value);
-    // const rawData = await fetch(`https://api.github.com/search/users?q=${user}`);
-    // const users = await rawData.json();
-    // console.log(users);
-  }
-
   return (
     <div>
       <Wrapper className={inputItems ? 'active' : ''}>
@@ -45,7 +37,11 @@ const Select: React.FC<Props> = ({ items }) => {
       <Ul {...getMenuProps()}>
         {isOpen &&
           inputItems.map((item, index) => (
-            <Item key={`${item}${index}`} {...getItemProps({ item, index })}>
+            <Item
+              key={`${item}${index}`}
+              {...getItemProps({ item, index })}
+              onClick={() => setUser?.(item)}
+            >
               <span>{item}</span>
               <svg
                 width="15"

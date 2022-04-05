@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import GlobalStyle from './globalStyles';
 import { Helmet } from 'react-helmet';
-import Headline from './components/Headline/Headline';
-import Select from './select/Select';
-import Layout from './layout/Layout';
-import Navigation from './navigation/Navigation';
+import Layout from './components/layout/Layout';
+import Navigation from './components/navigation/Navigation';
 import styled from 'styled-components';
+import Search from './components/search/Search';
+import Konbon from './components/kanban/Kanbon';
 
-function App() {
+const App = () => {
+  const [user, setUser] = useState<string | undefined>(undefined);
+
   return (
     <>
       <Helmet>
@@ -15,18 +17,13 @@ function App() {
       </Helmet>
       <GlobalStyle />
       <Layout>
-        <Navigation active={false} />
+        <Navigation active={!!user} onClick={() => setUser('')} />
         <Branding>GitKanban by CodeSandbox</Branding>
-        <Wrapper>
-          <Headline maxWidth="430px">
-            Search for a user or organization to find a repository.
-          </Headline>
-          <Select items={['item', 'item2']} />
-        </Wrapper>
+        <Wrapper>{user ? <Konbon user={user} /> : <Search setUser={setUser} />}</Wrapper>
       </Layout>
     </>
   );
-}
+};
 
 const Wrapper = styled.div`
   display: grid;
