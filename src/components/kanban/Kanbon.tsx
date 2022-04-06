@@ -31,45 +31,48 @@ const Konbon: React.FC<Props> = ({ user }) => {
 
   const moveToInProgress = (id: string, columnName: Columns) => {
     if (columnName === 'inReview') {
-      const filterColumn = inReview.filter((item: any) => item.id !== id);
-      const item = inReview.find((item: any) => item.id === id);
-      setInProgress((preState: any) => [...preState, item]);
+      const filterColumn = inReview?.filter(item => item.id !== id);
+      const item = inReview?.find(item => item.id === id);
+      setInProgress((prevState: any) => [...prevState, item]);
       setInReview(filterColumn);
     }
   };
   const moveToInReview = (id: string, columnName: Columns) => {
     if (columnName === 'inProgress') {
-      const filterColumn = inProgress.filter((item: any) => item.id !== id);
-      const item = inProgress.find((item: any) => item.id === id);
+      const filterColumn = inProgress?.filter(item => item.id !== id);
+      const item = inProgress?.find(item => item.id === id);
       setInReview((prevState: any) => [...prevState, item]);
       setInProgress(filterColumn);
     }
     if (columnName === 'complete') {
-      const filterColumn = complete.filter((item: any) => item.id !== id);
-      const item = complete.find((item: any) => item.id === id);
-      setInReview((inReview: any) => [...inReview, item]);
+      const filterColumn = complete?.filter(item => item.id !== id);
+      const item = complete?.find(item => item.id === id);
+      setInReview((prevState: any) => [...prevState, item]);
       setComplete(filterColumn);
     }
   };
   const moveToComplete = (id: string, columnName: Columns) => {
     if (columnName === 'inReview') {
-      const filterColumn = inReview.filter((item: any) => item.id !== id);
-      const item = inReview.find((item: any) => item.id === id);
-      setComplete((inReview: any) => [...inReview, item]);
+      const filterColumn = inReview?.filter(item => item.id !== id);
+      const item = inReview?.find(item => item.id === id);
+      setComplete((prevState: any) => [...prevState, item]);
       setInReview(filterColumn);
     }
   };
 
-  React.useEffect(() => {
+  React.useEffect((): any => {
+    let isSubscribed = true;
     async function getUserRepo(userId: string) {
       const rawRepos = await fetch(`https://api.github.com/users/${userId}/repos`);
       const repos = await rawRepos.json();
       const data = cleanData(repos);
-
-      setInProgress(data);
-      setStars(getStarCount(repos));
+      if (isSubscribed) {
+        setInProgress(data);
+        setStars(getStarCount(repos));
+      }
     }
-    getUserRepo(user);
+    getUserRepo(user).catch(console.error);
+    return () => (isSubscribed = false);
   }, [user]);
 
   return (
