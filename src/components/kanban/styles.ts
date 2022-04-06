@@ -32,10 +32,11 @@ export const Li = styled.li`
     display: block;
     text-align: center;
   }
-  svg {
-    fill: var(--color1);
-    opacity: 0;
+  button {
+    border: none;
+    background-color: transparent;
     pointer-events: none;
+    opacity: 0;
     cursor: pointer;
     &.active {
       opacity: 1;
@@ -44,5 +45,8 @@ export const Li = styled.li`
     &:last-of-type {
       transform: rotate(180deg);
     }
+  }
+  svg {
+    fill: var(--color1);
   }
 `;
