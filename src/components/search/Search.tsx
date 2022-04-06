@@ -14,6 +14,7 @@ const Search: React.FC<Props> = ({ setUser }) => {
     if (value.length < 4) return;
 
     const rawData = await fetch(`https://api.github.com/search/users?q=${value}`);
+    if (!rawData) return;
     const users = await rawData
       .json()
       .then(data => data.items.map((item: any) => item.login));

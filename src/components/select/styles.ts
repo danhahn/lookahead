@@ -57,7 +57,7 @@ export const Ul = styled.ul`
   padding: 0;
   list-style: none;
   position: absolute;
-  max-height: 400px;
+  max-height: 800px;
   overflow: auto;
   left: 0;
   right: 0;
