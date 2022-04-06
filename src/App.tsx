@@ -13,7 +13,7 @@ const App = () => {
   return (
     <>
       <Helmet>
-        <title>🏈 GitKanban by {user ? user : 'CodeSandbox'} </title>
+        <title>GitKanban by {user ? user : 'CodeSandbox'} </title>
       </Helmet>
       <GlobalStyle />
       <Layout>

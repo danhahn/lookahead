@@ -14,6 +14,7 @@ const commonStyles = css`
 
 export const StyledSearch = styled.div`
   grid-column: 3 / -1;
+  position: relative;
 `;
 
 export const Wrapper = styled.div`
@@ -55,6 +56,11 @@ export const Ul = styled.ul`
   margin: 0;
   padding: 0;
   list-style: none;
+  position: absolute;
+  max-height: 400px;
+  overflow: auto;
+  left: 0;
+  right: 0;
 `;
 
 export const Item = styled.li`
@@ -87,6 +93,7 @@ export const Item = styled.li`
   }
 
   &:focus,
+  &[aria-selected='true'],
   &:hover {
     span {
       opacity: 1;
