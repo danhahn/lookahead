@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Headline from '../Headline/Headline';
 import RepoItem from './RepoItem';
-import { Board, Ul, Li } from './styles';
+import { Board, Ul } from './styles';
 
 export type Columns = 'inProgress' | 'inReview' | 'complete';
 
@@ -24,19 +24,36 @@ const Konbon: React.FC<Props> = ({ user }) => {
   const [inReview, setInReview] = React.useState<Repo[]>([]);
   const [complete, setComplete] = React.useState<Repo[]>([]);
 
-  const moveToInProgress = (id: string | undefined) => {};
-  const moveToInReview = (id: string | undefined, fromColumn?: Columns) => {
-    if (!id) return;
-    console.log(id, fromColumn);
-    if (fromColumn === 'inProgress') {
-      const filterColumn = inProgress.filter((item: any) => item.id !== id);
-      const item = inProgress.find((item: any) => item.id === id);
-      console.log(filterColumn);
-      setInReview((inReview: any) => [...inReview, item]);
-      setInProgress(filterColumn);
+  const moveToInProgress = (id: string, columnName: Columns) => {
+    if (columnName === 'inReview') {
+      const filterColumn = inReview.filter((item: any) => item.id !== id);
+      const item = inReview.find((item: any) => item.id === id);
+      setInProgress((preState: any) => [...preState, item]);
+      setInReview(filterColumn);
     }
   };
-  const moveToCompleate = (id: string | undefined) => {};
+  const moveToInReview = (id: string, columnName: Columns) => {
+    if (columnName === 'inProgress') {
+      const filterColumn = inProgress.filter((item: any) => item.id !== id);
+      const item = inProgress.find((item: any) => item.id === id);
+      setInReview((prevState: any) => [...prevState, item]);
+      setInProgress(filterColumn);
+    }
+    if (columnName === 'complete') {
+      const filterColumn = complete.filter((item: any) => item.id !== id);
+      const item = complete.find((item: any) => item.id === id);
+      setInReview((inReview: any) => [...inReview, item]);
+      setComplete(filterColumn);
+    }
+  };
+  const moveToComplete = (id: string, columnName: Columns) => {
+    if (columnName === 'inReview') {
+      const filterColumn = inReview.filter((item: any) => item.id !== id);
+      const item = inReview.find((item: any) => item.id === id);
+      setComplete((inReview: any) => [...inReview, item]);
+      setInReview(filterColumn);
+    }
+  };
 
   React.useEffect(() => {
     async function getUserRepo(userId: string) {
@@ -65,21 +82,36 @@ const Konbon: React.FC<Props> = ({ user }) => {
         <Ul>
           {inProgress.map(repo => (
             <RepoItem
+              key={`p-${repo.id}`}
               repo={repo}
               rightArrow
-              moveRight={moveToInReview}
-              fromColumn="inProgress"
+              progress={moveToInReview}
+              columnName="inProgress"
             />
           ))}
         </Ul>
         <Ul>
           {inReview.map(repo => (
-            <RepoItem repo={repo} rightArrow leftArrow />
+            <RepoItem
+              key={`r-${repo.id}`}
+              repo={repo}
+              rightArrow
+              leftArrow
+              progress={moveToComplete}
+              degrees={moveToInProgress}
+              columnName="inReview"
+            />
           ))}
         </Ul>
         <Ul>
           {complete.map(repo => (
-            <RepoItem repo={repo} rightArrow />
+            <RepoItem
+              key={`c-${repo.id}`}
+              repo={repo}
+              leftArrow
+              columnName="complete"
+              degrees={moveToInReview}
+            />
           ))}
         </Ul>
       </Board>
