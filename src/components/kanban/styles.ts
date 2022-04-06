@@ -4,10 +4,13 @@ export const Board = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+  grid-column: 2 / -1;
 `;
 
 export const Ul = styled.ul`
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   gap: 10px;
   margin: 0;
   padding: 0;
@@ -22,7 +25,6 @@ export const Li = styled.li`
   gap: 10px;
   align-items: center;
   border-radius: 4px;
-  cursor: grab;
   &:hover {
     background-color: var(--color3);
   }
@@ -32,6 +34,13 @@ export const Li = styled.li`
   }
   svg {
     fill: var(--color1);
+    opacity: 0;
+    pointer-events: none;
+    cursor: pointer;
+    &.active {
+      opacity: 1;
+      pointer-events: all;
+    }
     &:last-of-type {
       transform: rotate(180deg);
     }

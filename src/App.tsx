@@ -13,22 +13,17 @@ const App = () => {
   return (
     <>
       <Helmet>
-        <title>🏈 My Title</title>
+        <title>🏈 GitKanban by {user ? user : 'CodeSandbox'} </title>
       </Helmet>
       <GlobalStyle />
       <Layout>
         <Navigation active={!!user} onClick={() => setUser('')} />
         <Branding>GitKanban by CodeSandbox</Branding>
-        <Wrapper>{user ? <Konbon user={user} /> : <Search setUser={setUser} />}</Wrapper>
+        {user ? <Konbon user={user} /> : <Search setUser={setUser} />}
       </Layout>
     </>
   );
 };
-
-const Wrapper = styled.div`
-  display: grid;
-  gap: 100px;
-`;
 
 const Branding = styled.p`
   font-size: 12px;

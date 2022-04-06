@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useCombobox } from 'downshift';
-import { Label, Wrapper, Input, Item, Ul } from './styles';
+import { Label, Wrapper, Input, Item, Ul, StyledSearch } from './styles';
 
 export type SelectItems = string[];
 
@@ -27,7 +27,7 @@ const Select: React.FC<Props> = ({ items, lookUpUsers, setUser }) => {
   });
 
   return (
-    <div>
+    <StyledSearch>
       <Wrapper className={inputItems ? 'active' : ''}>
         <Label {...getLabelProps()}>Type something</Label>
         <div {...getComboboxProps()}>
@@ -55,7 +55,7 @@ const Select: React.FC<Props> = ({ items, lookUpUsers, setUser }) => {
             </Item>
           ))}
       </Ul>
-    </div>
+    </StyledSearch>
   );
 };
 

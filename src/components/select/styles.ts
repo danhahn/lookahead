@@ -12,6 +12,10 @@ const commonStyles = css`
   color: var(--color1);
 `;
 
+export const StyledSearch = styled.div`
+  grid-column: 3 / -1;
+`;
+
 export const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
