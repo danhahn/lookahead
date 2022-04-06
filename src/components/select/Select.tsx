@@ -21,6 +21,11 @@ const Select: React.FC<Props> = ({ items, lookUpUsers, setUser }) => {
     getItemProps,
   } = useCombobox({
     items: inputItems,
+    onSelectedItemChange: value => {
+      console.log(value.selectedItem);
+      if (!value.selectedItem) return;
+      setUser?.(value.selectedItem);
+    },
     onInputValueChange: ({ inputValue }) => {
       setInputItems(items.filter(item => item.toLowerCase()));
     },
